@@ -1,35 +1,30 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue'
+import Hero from './components/Hero.vue'
+import Projects from './components/Projects.vue'
+import AboutContact from './components/AboutContact.vue'
+import Footer from './components/Footer.vue'
 </script>
 
-<!-- header -->
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div id="portfolio">
+    <Header />
+    <main>
+      <Hero />
+      <Projects />
+      <AboutContact />
+    </main>
+    <Footer />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<!-- main -->
-
-<!-- footer -->
-
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+#portfolio {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+main {
+  flex: 1 0 auto;
 }
 </style>

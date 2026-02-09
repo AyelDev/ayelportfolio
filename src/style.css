@@ -1,12 +1,14 @@
-:root {
+:root{
+  --bg: #0f0f10;
+  --surface: #111214;
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.6);
+  --accent: #646cff;
+  --card-bg: rgba(255,255,255,0.02);
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -15,7 +17,7 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--accent);
   text-decoration: inherit;
 }
 a:hover {
@@ -28,6 +30,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 h1 {
@@ -42,12 +46,12 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--surface);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--accent);
 }
 button:focus,
 button:focus-visible {
@@ -65,15 +69,67 @@ button:focus-visible {
   text-align: center;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Light theme overrides when `light` class is present on <html> */
+html.light {
+  --bg: #ffffff;
+  --surface: #fafafa;
+  --text: #213547;
+  --muted: rgba(33,53,71,0.6);
+  --accent: #646cff;
+  --card-bg: rgba(33,53,71,0.03);
 }
+
+/* Dark theme overrides when `dark` class is present on <html> */
+html.dark {
+  --bg: #0f0f10;
+  --surface: #111214;
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.6);
+  --accent: #646cff;
+  --card-bg: rgba(255,255,255,0.02);
+}
+
+/* Smooth transitions for theme changes */
+* {
+  transition: background-color 260ms ease, color 260ms ease, border-color 260ms ease;
+}
+
+body, #app {
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+/* Full-screen overlay used to create a cross-fade when toggling themes.
+   Sequence: add `theme-transition` to <html> (overlay fades in), then swap theme classes, then remove `theme-transition` (overlay fades out).
+*/
+html::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background: var(--bg);
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+
+html.theme-transition::before {
+  opacity: 1;
+}
+
+/* Portfolio additions */
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+.site-header, .site-footer { color: inherit; }
+.hero { padding-top: 2rem; padding-bottom: 2rem; }
+.lead { color: var(--muted); }
+.card { background: var(--card-bg); border-radius: 10px; }
+.grid { gap: 1rem; }
+
+@media (max-width: 640px) {
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.8rem; }
+}
+

@@ -31,4 +31,23 @@ npm install motion
 
 #Install Lucide-Vue-Next for modern icons
 npm install lucide-vue-next
+
+## Portfolio Template
+
+This workspace now includes a simple portfolio scaffold in `src/` with components:
+
+- `src/components/Header.vue`
+- `src/components/Hero.vue`
+- `src/components/Projects.vue`
+- `src/components/AboutContact.vue`
+- `src/components/Footer.vue`
+
+Run locally:
+
+```bash
+npm install
+npm run dev
+```
+
+Edit the sample content in `src/components` to personalize the template.
 ```
