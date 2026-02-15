@@ -12,11 +12,22 @@ import Hobbies from './components/Hobbies.vue'
   <div id="portfolio">
     <Header />
     <main>
-      <Hero />
+      <section id="hero">
+        <Hero />
+      </section>
+      <section id="about">
         <AboutContact />
-      <Hobbies />
-      <Skills />
-      <Projects />
+      </section>
+      <section id="skills">
+        <Hobbies />
+        <Skills />
+      </section>
+      <section id="projects">
+        <Projects />
+      </section>
+      <section id="contact">
+        <!-- Contact section will go here -->
+      </section>
     </main>
     <Footer />
   </div>
@@ -30,5 +41,10 @@ import Hobbies from './components/Hobbies.vue'
 }
 main {
   flex: 1 0 auto;
+}
+
+section {
+  min-height: 100 vh;
+  padding: 2rem 0;
 }
 </style>

@@ -1,4 +1,4 @@
-<template>
+<template id="hero">
   <div class="center_me">
     <div class="editor-window">
       <div class="code-row">
