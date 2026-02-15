@@ -5,7 +5,7 @@ import ThemeToggle from './ThemeToggle.vue'
 <template>
   <header class="site-header">
     <div class="container header-row">
-      <h1 class="brand"><a href="/">AyelDev</a></h1>
+      <h1 class="brand"><a href="/"><span><</span>AyelDev<span>/></span></a></h1>
       <div style="display:flex;align-items:center;gap:0.75rem">
         <nav class="nav">
           <a href="#projects">Projects</a>
