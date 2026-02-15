@@ -1,79 +1,167 @@
-<script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-
-const phrases = ["Hi — I'm Ayel", 'I build fast web apps', 'I focus on accessibility']
-const text = ref('')
-const cursorVisible = ref(true)
-let phraseIndex = 0
-let charIndex = 0
-let isDeleting = false
-let tickTimer: number | undefined
-let cursorTimer: number | undefined
-
-function tick(){
-  const current = phrases[phraseIndex]
-  if(!isDeleting){
-    // type
-    charIndex++
-    text.value = current.slice(0, charIndex)
-    if(charIndex >= current.length){
-      // pause then start deleting
-      isDeleting = true
-      clearTimeout(tickTimer)
-      tickTimer = window.setTimeout(tick, 900)
-      return
-    }
-  } else {
-    // delete
-    charIndex--
-    text.value = current.slice(0, charIndex)
-    if(charIndex <= 0){
-      isDeleting = false
-      phraseIndex = (phraseIndex + 1) % phrases.length
-    }
-  }
-  // typing speed: faster deleting
-  const delay = isDeleting ? 40 : 100
-  tickTimer = window.setTimeout(tick, delay)
-}
-
-onMounted(()=>{
-  // boot sequence
-  tickTimer = window.setTimeout(tick, 500)
-  cursorTimer = window.setInterval(()=> cursorVisible.value = !cursorVisible.value, 520)
-})
-
-onBeforeUnmount(()=>{
-  if(tickTimer) clearTimeout(tickTimer)
-  if(cursorTimer) clearInterval(cursorTimer)
-})
-</script>
-
 <template>
-  <section class="hero container">
-    <div class="hero-inner">
-      <h2 aria-live="polite"><span class="typed">{{ text }}</span><span class="cursor" :class="{ hidden: !cursorVisible }">|</span></h2>
-      <p class="lead">I build fast, accessible, and delightful web experiences.</p>
-      <div class="ctas">
-        <a href="#projects" class="btn">See Projects</a>
-        <a href="mailto:you@example.com" class="btn ghost">Get in touch</a>
+  <div class="center_me">
+    <div class="editor-window">
+      <div class="code-row">
+      </div>
+
+      <div class="code-row indent">
+        <p class="code-line">
+          System<span class="white">.</span><span class="red">out</span><span class="white">.</span><span
+            class="blue">println</span>("
+        </p>
+        <div class="string-window">
+          <div class="string-track">
+            <h1 class="greeting en">Welcome</h1>
+            <h1 class="greeting es">Bienvenue</h1>
+            <h1 class="greeting de">Willkommen</h1>
+            <h1 class="greeting it">Benvenuto</h1>
+            <h1 class="greeting en">Welcome</h1>
+          </div>
+        </div>
+        <p class="code-line">");</p>
       </div>
     </div>
-  </section>
+  </div>
 </template>
 
+<script setup lang="ts">
+// No logic needed as the animation is handled by CSS for performance
+</script>
+
 <style scoped>
-.hero { padding: 4rem 0; }
-.hero-inner { text-align: left; max-width: 900px; margin: 0 auto; }
-.hero h2 { margin: 0 0 0.5rem; font-size: 2.6rem; font-weight:700; display:flex; align-items:center; gap:0.5rem; }
-.typed { white-space: pre; min-width: 1ch; }
-.cursor { display:inline-block; width:1ch; color:var(--accent); opacity:1; transition: opacity 160ms linear; }
-.cursor.hidden { opacity:0 }
-.lead { margin: 0 0 1.25rem; color: var(--muted); }
-.ctas { display:flex; gap: 0.75rem; }
-.btn { display:inline-block; padding:0.6rem 1rem; border-radius:8px; background:var(--accent); color:#fff; text-decoration:none; }
-.btn.ghost { background:transparent; border:1px solid rgba(255,255,255,0.08); color:inherit; }
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
+
+/* 1. THE MAIN CONTAINER: Perfect Centering */
+.center_me {
+  background: #282c34;
+  display: flex;
+  justify-content: center;
+  /* Horizontal center */
+  align-items: center;
+  /* Vertical center */
+  margin: 0;
+  padding: 0;
+  font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 2. THE EDITOR WINDOW: Keeps code lines left-aligned */
+.editor-window {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 2rem;
+}
+
+.code-row {
+  display: flex;
+  align-items: baseline;
+}
+
+.indent {
+  margin-left: 4ch;
+  /* Standard 4-character indentation */
+}
+
+.code-line {
+  font-size: 4vmin;
+  margin: 0;
+  color: #e4bb68;
+  /* Method color */
+  line-height: 1.2;
+}
+
+/* Syntax Highlighting Colors */
+.white {
+  color: #abb2bf;
+}
+
+.red {
+  color: #e06c75;
+}
+
+.blue {
+  color: #61afef;
+}
+
+/* 3. THE TICKER LOGIC */
+.string-window {
+  height: 6vmin;
+  /* Matches the line-height/size of greetings */
+  overflow: hidden;
+}
+
+.string-track {
+  display: flex;
+  flex-direction: column;
+  /* 10 second loop using a smooth cubic-bezier snap */
+  animation: scroll-up 10s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+  will-change: transform;
+}
+
+.greeting {
+  font-size: 4vmin;
+  line-height: 6vmin;
+  margin: 0;
+  height: 6vmin;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Language Specific Colors */
+.en {
+  color: #98c379;
+}
+
+/* Greenish string color */
+.es {
+  color: #fa8231;
+}
+
+.de {
+  color: #c678dd;
+}
+
+.it {
+  color: #56b6c2;
+}
+
+/* 4. ANIMATION KEYFRAMES 
+   Calculated based on the height of one greeting (6vmin)
+*/
+@keyframes scroll-up {
+
+  0%,
+  15% {
+    transform: translateY(0);
+  }
+
+  20%,
+  35% {
+    transform: translateY(-6vmin);
+  }
+
+  40%,
+  55% {
+    transform: translateY(-12vmin);
+  }
+
+  60%,
+  75% {
+    transform: translateY(-18vmin);
+  }
+
+  80%,
+  100% {
+    transform: translateY(-24vmin);
+  }
+}
+
+/* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .cursor { transition: none !important }
+  .string-track {
+    animation: none;
+  }
 }
 </style>

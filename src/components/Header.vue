@@ -8,9 +8,10 @@ import ThemeToggle from './ThemeToggle.vue'
       <h1 class="brand"><a href="/"><span><</span>AyelDev<span>/></span></a></h1>
       <div style="display:flex;align-items:center;gap:0.75rem">
         <nav class="nav">
-          <a href="#projects">Projects</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="#projects">About me</a>
+          <a href="#about">Skils</a>
+          <a href="#contact">Projects</a>
+          <a href="#portfolio">My Portfolio</a>
         </nav>
         <ThemeToggle />
       </div>
