@@ -33,7 +33,7 @@
 
 /* 1. THE MAIN CONTAINER: Perfect Centering */
 .center_me {
-  background: #282c34;
+  /* background: #282c34; */
   display: flex;
   justify-content: center;
   /* Horizontal center */
@@ -65,7 +65,7 @@
 }
 
 .code-line {
-  font-size: 4vmin;
+  font-size: 6vmin;
   margin: 0;
   color: #e4bb68;
   /* Method color */
@@ -101,7 +101,7 @@
 }
 
 .greeting {
-  font-size: 4vmin;
+  font-size: 6vmin;
   line-height: 6vmin;
   margin: 0;
   height: 6vmin;

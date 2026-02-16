@@ -136,7 +136,7 @@ watch(theme, (val) => {
 }
 
 .toggle-track.checked .toggle-knob {
-  transform: translateX(18px);
+  transform: translateX(24px);
 }
 
 /* Label text */
