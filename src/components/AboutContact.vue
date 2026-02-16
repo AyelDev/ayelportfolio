@@ -1,183 +1,225 @@
 <template>
-  <div>
+  <div class="component-wrapper">
+    <div ref="threeCanvasContainer" class="three-container"></div>
+
     <section 
       ref="revealSection" 
       class="about container reveal-effect"
       :class="{ 'is-visible': isVisible }"
     >
       <div class="about-grid">
-        
         <div class="about-content">
-          <h3>About Me</h3>
+          <div class="tag">// Backend Infrastructure</div>
+          <h3>Half the Visual,<br/>Full the Logic.</h3>
           <p>
-            I’m a frontend developer focused on creating pleasant user experiences 
-            and performant applications. I enjoy <strong>TypeScript</strong>, 
-            <strong>Vue</strong>, and <strong>a11y-first design</strong>.
+            I specialize in the parts of the system you don't see. 
+            Scalable databases, optimized query layers, and robust API design.
           </p>
           
-          <div id="contact" class="contact">
-            <h4>Contact</h4>
-            <p>Email — <a href="mailto:you@example.com">you@example.com</a></p>
+          <div class="contact">
+            <p><a href="mailto:you@example.com">you@example.com</a></p>
           </div>
         </div>
-
-        <div class="about-frame">
-          <div class="image-square">
-            <img src="https://via.placeholder.com/400" alt="Profile Portrait" />
-          </div>
-        </div>
-
+        
+        <div class="globe-space"></div>
       </div>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import * as THREE from 'three';
 
-// --- Scroll-Reveal Logic ---
 const isVisible = ref(false);
 const revealSection = ref<HTMLElement | null>(null);
+const threeCanvasContainer = ref<HTMLElement | null>(null);
+
+let renderer: THREE.WebGLRenderer;
+let scene: THREE.Scene;
+let camera: THREE.PerspectiveCamera;
+let wireframeMesh: THREE.Mesh;
+let animationFrameId: number;
+
+const updateGlobePosition = () => {
+  if (!wireframeMesh) return;
+  
+  const width = window.innerWidth;
+  
+  if (width <= 768) {
+    // Mobile: Centered at the bottom, slightly cropped
+    wireframeMesh.position.set(0, -2, 0);
+    wireframeMesh.scale.set(0.7, 0.7, 0.7);
+  } else {
+    // Desktop: Pushed to the far right edge to show exactly "half"
+    // We adjust X based on the perspective. ~4.5 is usually the "halfway" mark for a 3-unit radius at Z=5
+    wireframeMesh.position.set(4.5, 0, 0);
+    wireframeMesh.scale.set(1.2, 1.2, 1.2);
+  }
+};
+
+const initThree = () => {
+  if (!threeCanvasContainer.value) return;
+
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera.position.z = 5;
+
+  renderer = new THREE.WebGLRenderer({ 
+    alpha: true, 
+    antialias: true,
+    powerPreference: "high-performance" 
+  });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  threeCanvasContainer.value.appendChild(renderer.domElement);
+
+  // Geometry: Icosahedron (1 detail level for minimal wireframe)
+  const geometry = new THREE.IcosahedronGeometry(3, 1); 
+
+  // Material: Clean Blue
+  const material = new THREE.MeshBasicMaterial({
+    color: 0x61afef,
+    wireframe: true,
+    transparent: true,
+    opacity: 0.2
+  });
+
+  wireframeMesh = new THREE.Mesh(geometry, material);
+  scene.add(wireframeMesh);
+
+  updateGlobePosition();
+
+  const animate = () => {
+    animationFrameId = requestAnimationFrame(animate);
+    
+    // Slow, technical rotation
+    wireframeMesh.rotation.y += 0.001;
+    wireframeMesh.rotation.x += 0.0005;
+    
+    renderer.render(scene, camera);
+  };
+
+  animate();
+};
+
+const handleResize = () => {
+  if (!camera || !renderer) return;
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  updateGlobePosition();
+};
 
 onMounted(() => {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      // Set visible to true when 20% of the element enters the screen
-      if (entry.isIntersecting) {
-        isVisible.value = true;
-      }
-    });
-  }, { threshold: 0.2 });
+  initThree();
+  window.addEventListener('resize', handleResize);
 
-  if (revealSection.value) {
-    observer.observe(revealSection.value);
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) isVisible.value = true;
+  }, { threshold: 0.1 });
+
+  if (revealSection.value) observer.observe(revealSection.value);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize);
+  cancelAnimationFrame(animationFrameId);
+  if (renderer) {
+    renderer.dispose();
+    renderer.forceContextLoss();
   }
 });
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
-
-/* --- HERO SECTION STYLES --- */
-.hero-section {
-  min-height: 20vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.component-wrapper {
+  position: relative;
+  min-height: 100vh;
+  background-color: #0b0e14;
+  overflow-x: hidden;
+  font-family: 'Inter', sans-serif;
 }
 
-.center_me {
-  cursor: pointer;
-  font-family: 'JetBrains Mono', monospace;
+.three-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.editor-window {
-  display: flex;
-  flex-direction: column;
-  padding: 2.5rem;
-  background: #282c34;
-  border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-}
-
-.code-row { display: flex; align-items: baseline; }
-.indent { margin-left: 4ch; }
-.code-line { font-size: 5vmin; margin: 0; color: #e4bb68; line-height: 1.2; }
-
-/* Syntax Colors */
-.white { color: #abb2bf; }
-.red { color: #e06c75; }
-.blue { color: #61afef; }
-
-/* Ticker Animation */
-.string-window { height: 6vmin; overflow: hidden; }
-.string-track {
-  display: flex;
-  flex-direction: column;
-  animation: scroll-up 8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-  animation-play-state: paused; /* Hover to play */
-}
-
-.center_me:hover .string-track {
-  animation-play-state: running;
-}
-
-.greeting {
-  font-size: 5.5vmin;
-  line-height: 6vmin;
-  height: 6vmin;
-  margin: 0;
-  font-weight: 500;
-}
-
-.en { color: #98c379; }
-.es { color: #fa8231; }
-.de { color: #c678dd; }
-.it { color: #56b6c2; }
-
-@keyframes scroll-up {
-  0%, 15%   { transform: translateY(0); }
-  20%, 35%  { transform: translateY(-6vmin); }
-  40%, 55%  { transform: translateY(-12vmin); }
-  60%, 75%  { transform: translateY(-18vmin); }
-  80%, 100% { transform: translateY(-24vmin); }
-}
-
-/* --- ABOUT SECTION & REVEAL --- */
 .about {
-  padding: 5rem 10%;
-  max-width: 1100px;
-  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  padding: 0 10%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
 }
 
 .about-grid {
-  display: flex;
-  align-items: center;
-  gap: 5rem;
-}
-
-.about-content { flex: 1; }
-
-.about-frame {
-  flex: 0 0 320px;
-  border: 3px solid #333;
-  padding: 1rem;
-  background-color: #fff;
-  box-shadow: 12px 12px 0px #333;
-  transition: transform 3s ease;
-}
-
-.image-square {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: #f0f0f0;
-  overflow: hidden;
+  gap: 4rem;
 }
 
-.image-square img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.tag {
+  color: #61afef;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  letter-spacing: 2px;
 }
 
-/* Scroll-Reveal CSS Classes */
+.about-content h3 { 
+  font-size: clamp(2.5rem, 6vw, 4rem); 
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.about-content p { 
+  font-size: 1.1rem;
+  color: #abb2bf;
+  max-width: 450px;
+  line-height: 1.7;
+}
+
+.contact { margin-top: 3rem; }
+.contact a { 
+  color: #fff; 
+  text-decoration: none; 
+  font-weight: 600;
+  padding: 0.5rem 0;
+  border-bottom: 2px solid #61afef;
+}
+
 .reveal-effect {
   opacity: 0;
-  transform: translateY(60px);
-  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateX(-30px);
+  transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .reveal-effect.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
-.contact { margin-top: 2rem; }
+@media (max-width: 1024px) {
+  .about-grid { gap: 2rem; }
+}
 
-/* Responsive */
 @media (max-width: 768px) {
-  .about-grid { flex-direction: column-reverse; gap: 3rem; }
-  .about-frame { flex: 0 0 auto; width: 280px; }
-  .code-line, .greeting { font-size: 4.5vmin; }
+  .about-grid { 
+    grid-template-columns: 1fr; 
+    text-align: center;
+  }
+  .about-content { margin: 0 auto; }
+  .globe-space { height: 200px; }
 }
 </style>

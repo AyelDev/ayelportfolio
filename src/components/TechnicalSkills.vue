@@ -35,7 +35,7 @@ function resume(){ isPaused = false }
 
 function onPointerDown(e: PointerEvent){
   if(!rail.value) return
-  pause()
+  pause();
   (rail.value as any).setPointerCapture?.(e.pointerId)
   const startX = e.clientX
   const startScroll = rail.value.scrollLeft

@@ -24,10 +24,11 @@ const scrollToSection = (event: Event, targetId: string) => {
           <a @click="(e) => scrollToSection(e, 'projects')" href="#projects">Projects</a>
           <a @click="(e) => scrollToSection(e, 'contact')" href="#contact">Contact</a>
         </nav>
-        <ThemeToggle />
       </div>
     </div>
   </header>
+        <ThemeToggle />
+
 </template>
 
 <style scoped>
