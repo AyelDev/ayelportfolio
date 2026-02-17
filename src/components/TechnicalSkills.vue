@@ -3,9 +3,6 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const projects = [
   { title: 'Project One', description: 'A short description of project one.', url: '#' },
-  { title: 'Project Two', description: 'A short description of project two.', url: '#' },
-  { title: 'Project Three', description: 'A short description of project three.', url: '#' },
-  { title: 'Project Four', description: 'A short description of project four.', url: '#' }
 ]
 
 const rail = ref<HTMLElement | null>(null)

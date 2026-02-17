@@ -21,7 +21,9 @@
           </div>
         </div>
         
-        <div class="globe-space"></div>
+        <div class="globe-space">
+          <AstronautModel />
+          </div>
       </div>
     </section>
   </div>
@@ -29,6 +31,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+import AstronautModel from './AstronautModel.vue'
 import * as THREE from 'three';
 
 const isVisible = ref(false);
@@ -220,6 +223,6 @@ onBeforeUnmount(() => {
     text-align: center;
   }
   .about-content { margin: 0 auto; }
-  .globe-space { height: 200px; }
+  .globe-space { height: 100px; }
 }
 </style>

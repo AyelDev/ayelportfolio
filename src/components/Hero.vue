@@ -1,27 +1,33 @@
 <template id="hero">
-  <div class="center_me">
-    <div class="editor-window">
-      <div class="code-row">
-      </div>
+  <section class="hero">
+    <div class="hero-content">
+      
+      <div class="text-section">
+        <div class="editor-window">
+          <div class="code-row">
+          </div>
 
-      <div class="code-row indent">
-        <p class="code-line">
-          System<span class="white">.</span><span class="red">out</span><span class="white">.</span><span
-            class="blue">println</span>("
-        </p>
-        <div class="string-window">
-          <div class="string-track">
-            <h1 class="greeting en">Welcome</h1>
-            <h1 class="greeting es">Bienvenue</h1>
-            <h1 class="greeting de">Willkommen</h1>
-            <h1 class="greeting it">Benvenuto</h1>
-            <h1 class="greeting en">Welcome</h1>
+          <div class="code-row indent">
+            <p class="code-line">
+              System<span class="white">.</span><span class="red">out</span><span class="white">.</span><span
+                class="blue">println</span>("
+            </p>
+            <div class="string-window">
+              <div class="string-track">
+                <h1 class="greeting en">Welcome</h1>
+                <h1 class="greeting es">Bienvenue</h1>
+                <h1 class="greeting de">Willkommen</h1>
+                <h1 class="greeting it">Benvenuto</h1>
+                <h1 class="greeting en">Welcome</h1>
+              </div>
+            </div>
+            <p class="code-line">");</p>
           </div>
         </div>
-        <p class="code-line">");</p>
       </div>
+       
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -32,13 +38,33 @@
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
 
 /* 1. THE MAIN CONTAINER: Perfect Centering */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.hero-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.text-section {
+  max-width: 800px;
+  width: 100%;
+}
+
 .center_me {
   /* background: #282c34; */
   display: flex;
   justify-content: center;
   /* Horizontal center */
   align-items: center;
-  /* Vertical center */
   margin: 0;
   padding: 0;
   font-family: 'JetBrains Mono', monospace;
@@ -50,7 +76,7 @@
 .editor-window {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 2rem;
 }
 
@@ -60,8 +86,8 @@
 }
 
 .indent {
-  margin-left: 4ch;
-  /* Standard 4-character indentation */
+  margin-left: 0;
+  /* Removed indentation to center content */
 }
 
 .code-line {
@@ -162,6 +188,22 @@
 @media (prefers-reduced-motion: reduce) {
   .string-track {
     animation: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .editor-window {
+    align-items: center;
+  }
+  
+  .indent {
+    margin-left: 0;
+    justify-content: center;
   }
 }
 </style>
