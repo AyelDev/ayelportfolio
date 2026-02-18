@@ -31,7 +31,7 @@ const initScene = () => {
     2,
     1000
   )
-  camera.position.set(0, 6, 4.5)
+  camera.position.set(0, 5, 2)
   camera.lookAt(0,4.5, 0);
 
   // 3. Renderer Setup (Critical for Colors)
@@ -71,9 +71,9 @@ const initScene = () => {
 
   // 6. Loader Setup
   const loader = new GLTFLoader()
-  
+
   loader.load(
-    '/3dmodel/astronaut/scene.gltf',
+    '/3dmodel/flying_tower/scene.gltf',
     (gltf) => {
       model = gltf.scene
       model.scale.set(2, 2, 2)
