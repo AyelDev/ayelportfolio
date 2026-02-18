@@ -31,8 +31,7 @@ const initScene = () => {
     2,
     1000
   )
-  camera.position.set(0, 5, 2)
-  camera.lookAt(0,4.5, 0);
+  camera.position.set(0, -20, 46)
 
   // 3. Renderer Setup (Critical for Colors)
   renderer = new THREE.WebGLRenderer({ 
@@ -77,7 +76,7 @@ const initScene = () => {
     (gltf) => {
       model = gltf.scene
       model.scale.set(2, 2, 2)
-      model.position.set(0, -1.2, 0)
+      model.position.set(0, -1.5, 0)
       
       // Fix Material Colors and Reflections
       model.traverse((child: any) => {
