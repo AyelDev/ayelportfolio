@@ -1,6 +1,6 @@
 <template>
-  <div class="astronaut-container">
-    <div ref="mountPoint" class="astronaut-model"></div>
+  <div class="flyingtower-container">
+    <div ref="mountPoint" class="flyingtower-model"></div>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ let scene: THREE.Scene | null = null
 let camera: THREE.PerspectiveCamera | null = null
 let renderer: THREE.WebGLRenderer | null = null
 let model: THREE.Group | null = null
-let animationMixer: THREE.AnimationMixer | null = null
+let animationMixer: THREE.AnimationMixer | null =  null
 let frameId: number | null = null
 
 const initScene = () => {
@@ -148,14 +148,14 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.astronaut-container {
+.flyingtower-container {
   width: 100%;
   height: 100vh; /* Adjust height as needed */
   overflow: hidden;
   background: transparent;
 }
 
-.astronaut-model {
+.flyingtower-model {
   width: 100%;
   height: 100%;
 }

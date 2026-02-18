@@ -1,22 +1,11 @@
-<script setup lang="ts">
-import Header from './components/Header.vue'
-import Hero from './components/Hero.vue'
-import Projects from './components/Projects.vue'
-import AboutContact from './components/AboutContact.vue'
-import Footer from './components/Footer.vue'
-import Skills from './components/TechnicalSkills.vue'
-import Hobbies from './components/Hobbies.vue'
-</script>
-
 <template>
   <div id="portfolio">
+  <Background3D />
     <Sidebar />
+      
     <div class="main-content">
       <Header />
       <main>
-        <section id="hero">
-          <Hero />
-        </section>
         <section id="about">
           <AboutContact />
         </section>
@@ -35,6 +24,17 @@ import Hobbies from './components/Hobbies.vue'
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import Header from './components/Header.vue'
+import Hero from './components/Hero.vue'
+import Projects from './components/Projects.vue'
+import AboutContact from './components/AboutContact.vue'
+import Footer from './components/Footer.vue'
+import Skills from './components/TechnicalSkills.vue'
+import Hobbies from './components/Hobbies.vue'
+import Background3D from './components/Background3D.vue'
+</script>
 
 <style scoped>
 #portfolio {

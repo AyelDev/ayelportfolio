@@ -1,6 +1,8 @@
+ 
 <template>
+
   <div class="component-wrapper">
-    <div ref="threeCanvasContainer" class="three-container"></div>
+
 
     <section 
       ref="revealSection" 
@@ -31,93 +33,15 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import AstronautModel from './AstronautModel.vue'
-import * as THREE from 'three';
+import AstronautModel from './FlyingTower.vue'
+import Background3D from './Background3D.vue'
 
 const isVisible = ref(false);
 const revealSection = ref<HTMLElement | null>(null);
-const threeCanvasContainer = ref<HTMLElement | null>(null);
 
-let renderer: THREE.WebGLRenderer;
-let scene: THREE.Scene;
-let camera: THREE.PerspectiveCamera;
-let wireframeMesh: THREE.Mesh;
-let animationFrameId: number;
 
-const updateGlobePosition = () => {
-  if (!wireframeMesh) return;
-  
-  const width = window.innerWidth;
-  
-  if (width <= 768) {
-    // Mobile: Centered at the bottom, slightly cropped
-    wireframeMesh.position.set(0, -2, 0);
-    wireframeMesh.scale.set(0.7, 0.7, 0.7);
-  } else {
-    // Desktop: Pushed to the far right edge to show exactly "half"
-    // We adjust X based on the perspective. ~4.5 is usually the "halfway" mark for a 3-unit radius at Z=5
-    wireframeMesh.position.set(4.5, 0, 0);
-    wireframeMesh.scale.set(1.2, 1.2, 1.2);
-  }
-};
-
-const initThree = () => {
-  if (!threeCanvasContainer.value) return;
-
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-  camera.position.z = 5;
-
-  renderer = new THREE.WebGLRenderer({ 
-    alpha: true, 
-    antialias: true,
-    powerPreference: "high-performance" 
-  });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  threeCanvasContainer.value.appendChild(renderer.domElement);
-
-  // Geometry: Icosahedron (1 detail level for minimal wireframe)
-  const geometry = new THREE.IcosahedronGeometry(3, 1); 
-
-  // Material: Clean Blue
-  const material = new THREE.MeshBasicMaterial({
-    color: 0x61afef,
-    wireframe: true,
-    transparent: true,
-    opacity: 0.2
-  });
-
-  wireframeMesh = new THREE.Mesh(geometry, material);
-  scene.add(wireframeMesh);
-
-  updateGlobePosition();
-
-  const animate = () => {
-    animationFrameId = requestAnimationFrame(animate);
-    
-    // Slow, technical rotation
-    wireframeMesh.rotation.y += 0.001;
-    wireframeMesh.rotation.x += 0.0005;
-    
-    renderer.render(scene, camera);
-  };
-
-  animate();
-};
-
-const handleResize = () => {
-  if (!camera || !renderer) return;
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  updateGlobePosition();
-};
 
 onMounted(() => {
-  initThree();
-  window.addEventListener('resize', handleResize);
-
   const observer = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting) isVisible.value = true;
   }, { threshold: 0.1 });
@@ -126,12 +50,6 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', handleResize);
-  cancelAnimationFrame(animationFrameId);
-  if (renderer) {
-    renderer.dispose();
-    renderer.forceContextLoss();
-  }
 });
 </script>
 
@@ -139,20 +57,11 @@ onBeforeUnmount(() => {
 .component-wrapper {
   position: relative;
   min-height: 100vh;
-  background-color: #0b0e14;
   overflow-x: hidden;
   font-family: 'Inter', sans-serif;
 }
 
-.three-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
+
 
 .about {
   position: relative;
