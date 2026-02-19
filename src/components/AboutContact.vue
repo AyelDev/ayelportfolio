@@ -12,7 +12,7 @@
       <div class="about-grid">
         <div class="about-content">
           <div class="tag">// Backend Infrastructure</div>
-          <h3>Half the Visual,<br/>Full the Logic.</h3>
+          <h3 style="-webkit-text-stroke: 1px black;">Half the Visual,<br/>Full the Logic.</h3>
           <p>
             I specialize in the parts of the system you don't see. 
             Scalable databases, optimized query layers, and robust API design.
@@ -58,7 +58,7 @@ onBeforeUnmount(() => {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Rowdies', sans-serif;
 }
 
 
@@ -81,7 +81,7 @@ onBeforeUnmount(() => {
 
 .tag {
   color: #61afef;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', monospace;
   font-size: 0.8rem;
   margin-bottom: 1rem;
   letter-spacing: 2px;
