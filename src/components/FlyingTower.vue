@@ -31,7 +31,7 @@ const initScene = () => {
     2,
     1000
   )
-  camera.position.set(0, -20, 46)
+  camera.position.set(0, -30, 60)
 
   // 3. Renderer Setup (Critical for Colors)
   renderer = new THREE.WebGLRenderer({ 

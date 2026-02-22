@@ -1,26 +1,24 @@
 <template>
   <div id="portfolio">
-  <Background3D />
-    <Sidebar />
-      
+    <Background3D />
+
     <div class="main-content">
       <Header />
       <main>
         <section id="about">
-          <AboutContact />
+          <Hero />
+        </section>
+        <section id="hobbies">
+          <Hobbies />
         </section>
         <section id="skills">
-          <Hobbies />
           <Skills />
         </section>
         <section id="projects">
           <Projects />
         </section>
-        <section id="contact">
-          <!-- Contact section will go here -->
-        </section>
       </main>
-      <Footer />
+      <Footer id="footer" />
     </div>
   </div>
 </template>
@@ -28,7 +26,7 @@
 <script setup lang="ts">
 import Header from './components/Header.vue'
 import Projects from './components/Projects.vue'
-import AboutContact from './components/AboutContact.vue'
+import Hero from './components/Hero.vue'
 import Footer from './components/Footer.vue'
 import Skills from './components/TechnicalSkills.vue'
 import Hobbies from './components/Hobbies.vue'

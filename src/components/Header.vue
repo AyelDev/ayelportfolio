@@ -19,10 +19,11 @@ const scrollToSection = (event: Event, targetId: string) => {
       <h1 class="brand"><a @click="(e) => scrollToSection(e, 'app')" href="#app"><span><</span>AyelDev<span>/></span></a></h1>
       <div style="display:flex;align-items:center;gap:0.75rem">
         <nav class="nav">
-          <a @click="(e) => scrollToSection(e, 'about')" href="#about">About Me</a>
+          <a @click="(e) => scrollToSection(e, 'app')" href="#about">About Me</a>
+           <a @click="(e) => scrollToSection(e, 'hobbies')" href="#hobbies">Hobbies</a>
           <a @click="(e) => scrollToSection(e, 'skills')" href="#skills">Skills</a>
           <a @click="(e) => scrollToSection(e, 'projects')" href="#projects">Projects</a>
-          <a @click="(e) => scrollToSection(e, 'contact')" href="#contact">Contact</a>
+          <a @click="(e) => scrollToSection(e, 'footer')" href="#footer">Contact</a>
         </nav>
       </div>
     </div>
@@ -33,15 +34,15 @@ const scrollToSection = (event: Event, targetId: string) => {
 
 <style scoped>
 .site-header {
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  padding: 1rem 0;
-  background: transparent;
+  background: rgba(4, 0, 0, 0.2);
   position: sticky;
   top: 0;
   z-index: 100;
   backdrop-filter: blur(10px);
-  background: rgba(15, 15, 16, 0.8);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px; 
 }
+
 .header-row {
   display: flex;
   align-items: center;
@@ -56,6 +57,7 @@ const scrollToSection = (event: Event, targetId: string) => {
   margin-left: 1rem;
   color: inherit;
   text-decoration: none;
+  font-size: 1.3rem;
   position: relative;
   padding: 0.5rem 0;
   transition: all 0.3s ease;
@@ -81,13 +83,6 @@ const scrollToSection = (event: Event, targetId: string) => {
   width: 100%;
 }
 .container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
-
-/* Light theme adjustments */
-html.light .site-header {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(0, 0, 0, 0.04);
-  backdrop-filter: blur(10px);
-}
 
 @media (max-width: 768px) {
   .site-header {

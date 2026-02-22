@@ -1,209 +1,119 @@
-<template id="hero">
-  <section class="hero">
-    <div class="hero-content">
-      
-      <div class="text-section">
-        <div class="editor-window">
-          <div class="code-row">
-          </div>
-
-          <div class="code-row indent">
-            <p class="code-line">
-              System<span class="white">.</span><span class="red">out</span><span class="white">.</span><span
-                class="blue">println</span>("
+<template>
+  <div class="component-wrapper">
+    <section ref="revealSection" class="about container reveal-effect" :class="{ 'is-visible': isVisible }">
+      <div class="about-grid">
+        <div class="about-content">
+          <div class="hero-card">
+            <h1 class="about-title">Hi I'm <span class="highlight">Ariel</span></h1>
+            <p class="hero-sub-title">Web/Backend Developer</p>
+            <p class="about-description">
+              I build scalable web applications and robust backend systems
+              focused on performance, security, and clean architecture.
             </p>
-            <div class="string-window">
-              <div class="string-track">
-                <h1 class="greeting en">Welcome</h1>
-                <h1 class="greeting es">Bienvenue</h1>
-                <h1 class="greeting de">Willkommen</h1>
-                <h1 class="greeting it">Benvenuto</h1>
-                <h1 class="greeting en">Welcome</h1>
-              </div>
-            </div>
-            <p class="code-line">");</p>
           </div>
         </div>
+
+        <div class="globe-space">
+          <AstronautModel />
+        </div>
       </div>
-       
-    </div>
-  </section>
+    </section>
+  </div>
 </template>
 
 <script setup lang="ts">
-// No logic needed as the animation is handled by CSS for performance
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import AstronautModel from './FlyingTower.vue'
+
+const isVisible = ref(false);
+const revealSection = ref<HTMLElement | null>(null);
+
+onMounted(() => {
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) isVisible.value = true;
+  }, { threshold: 0.1 });
+
+  if (revealSection.value) observer.observe(revealSection.value);
+});
+
+onBeforeUnmount(() => {
+});
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
-
-/* 1. THE MAIN CONTAINER: Perfect Centering */
-.hero {
-  min-height: 100vh;
+.component-wrapper {
+  position: relative;
+  min-height: 100vh; /* Increased to give breathing room */
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 2rem;
 }
 
-.hero-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 1200px;
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr; /* Gives text a bit more room */
+  margin-top: 10rem;
   width: 100%;
+  gap: 2rem;
 }
 
-.text-section {
-  max-width: 800px;
-  width: 100%;
+/* --- THE GLASS CARD --- */
+.hero-card {
+  background: var(--card-bg); /* Semi-transparent white */
+  backdrop-filter: blur(8px); /* The "Frosted" effect */
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  padding: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
-.center_me {
-  /* background: #282c34; */
-  display: flex;
-  justify-content: center;
-  /* Horizontal center */
-  align-items: center;
+/* --- TEXT HIERARCHY --- */
+.about-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+}
+
+.highlight {
+  color: #ffffff; /* Or a primary color like #61afef */
+}
+
+.hero-sub-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.about-description {
+  font-size: 1.2rem;
+  line-height: 1.6; /* Fixed from -10rem */
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
-  padding: 0;
-  font-family: 'JetBrains Mono', monospace;
-  overflow: hidden;
-  box-sizing: border-box;
 }
 
-/* 2. THE EDITOR WINDOW: Keeps code lines left-aligned */
-.editor-window {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
+/* --- ANIMATION --- */
+.reveal-effect {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease-out;
 }
 
-.code-row {
-  display: flex;
-  align-items: baseline;
+.reveal-effect.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.indent {
-  margin-left: 0;
-  /* Removed indentation to center content */
-}
-
-.code-line {
-  font-size: 6vmin;
-  margin: 0;
-  color: #e4bb68;
-  /* Method color */
-  line-height: 1.2;
-}
-
-/* Syntax Highlighting Colors */
-.white {
-  color: #abb2bf;
-}
-
-.red {
-  color: #e06c75;
-}
-
-.blue {
-  color: #61afef;
-}
-
-/* 3. THE TICKER LOGIC */
-.string-window {
-  height: 6vmin;
-  /* Matches the line-height/size of greetings */
-  overflow: hidden;
-}
-
-.string-track {
-  display: flex;
-  flex-direction: column;
-  /* 10 second loop using a smooth cubic-bezier snap */
-  animation: scroll-up 10s cubic-bezier(0.76, 0, 0.24, 1) infinite;
-  will-change: transform;
-}
-
-.greeting {
-  font-size: 6vmin;
-  line-height: 6vmin;
-  margin: 0;
-  height: 6vmin;
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-/* Language Specific Colors */
-.en {
-  color: #98c379;
-}
-
-/* Greenish string color */
-.es {
-  color: #fa8231;
-}
-
-.de {
-  color: #c678dd;
-}
-
-.it {
-  color: #56b6c2;
-}
-
-/* 4. ANIMATION KEYFRAMES 
-   Calculated based on the height of one greeting (6vmin)
-*/
-@keyframes scroll-up {
-
-  0%,
-  15% {
-    transform: translateY(0);
-  }
-
-  20%,
-  35% {
-    transform: translateY(-6vmin);
-  }
-
-  40%,
-  55% {
-    transform: translateY(-12vmin);
-  }
-
-  60%,
-  75% {
-    transform: translateY(-18vmin);
-  }
-
-  80%,
-  100% {
-    transform: translateY(-24vmin);
-  }
-}
-
-/* Accessibility */
-@media (prefers-reduced-motion: reduce) {
-  .string-track {
-    animation: none;
-  }
-}
-
-@media (max-width: 1024px) {
-  .hero-content {
-    flex-direction: column;
+/* --- RESPONSIVENESS --- */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr;
     text-align: center;
   }
-  
-  .editor-window {
-    align-items: center;
-  }
-  
-  .indent {
-    margin-left: 0;
-    justify-content: center;
+  .hero-card {
+    padding: 2rem;
   }
 }
 </style>

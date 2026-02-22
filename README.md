@@ -39,7 +39,7 @@ This workspace now includes a simple portfolio scaffold in `src/` with component
 - `src/components/Header.vue`
 - `src/components/Hero.vue`
 - `src/components/Projects.vue`
-- `src/components/AboutContact.vue`
+- `src/components/Hero.vue`
 - `src/components/Footer.vue`
 
 Run locally:

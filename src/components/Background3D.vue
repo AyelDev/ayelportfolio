@@ -20,23 +20,20 @@ let frameId: number | null = null
 const initScene = () => {
   if (!mountPoint.value) return
 
-  // 1. Scene Setup
   scene = new THREE.Scene()
-  // Ensure the scene itself doesn't have a background color
   scene.background = null 
 
-  // 2. Camera Setup
   const width = window.innerWidth
   const height = window.innerHeight
   
   camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000)
-  camera.position.set(-9, 0, 10) // Adjusted for better background framing
+  camera.position.set(-9, 0, 10) 
   camera.lookAt(0, 5.5, 10)
 
   // 3. Renderer Setup
-  renderer = new THREE.WebGLRenderer({ 
+  renderer = new THREE.WebGLRenderer({
     antialias: true, 
-    alpha: true, // Required for transparency
+    alpha: true,
     powerPreference: "high-performance" 
   })
   renderer.setSize(width, height)

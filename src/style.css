@@ -1,16 +1,21 @@
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px; /* Account for fixed header */
+  scroll-padding-top: 80px;
+  /* Account for fixed header */
 }
 
-:root{
+:root {
+  --primColor: #3479f8;
+  --secdryColor: #646cff;
   --bg: #0f0f10;
   --surface: #111214;
-  --text: rgba(255,255,255,0.92);
-  --muted: rgba(255,255,255,0.6);
-  --accent: #646cff;
-  --card-bg: rgba(255,255,255,0.02);
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --text: rgba(255, 255, 255, 0.92);
+  --muted: rgba(255, 255, 255, 0.6);
+  --accent: #7edbff;
+  --card-bg: rgba(0, 0, 0, 0.15);
+  /* primary font */
+  font-family: 'Rowdies', sans-serif;
+  --secondary-font: "Montserrat", sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -25,9 +30,6 @@ a {
   color: var(--accent);
   text-decoration: inherit;
 }
-a:hover {
-  color: #535bf2;
-}
 
 body {
   margin: 0;
@@ -37,11 +39,6 @@ body {
   min-height: 100vh;
   background-color: var(--bg);
   color: var(--text);
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
 }
 
 button {
@@ -55,16 +52,37 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: var(--accent);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* default card */
 .card {
-  padding: 2em;
+  overflow: hidden;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 24px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.3s ease;
+}
+
+/* component card */
+.hobbies-card, .technical-card, .projects-card{
+  background: var(--card-bg); /* Semi-transparent white */
+  backdrop-filter: blur(8px); /* The "Frosted" effect */
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  width: 100%;
 }
 
 #app {
@@ -74,37 +92,15 @@ button:focus-visible {
   text-align: center;
 }
 
-/* Light theme overrides when `light` class is present on <html> */
-html.light {
-  --bg: #ffffff;
-  --surface: #fafafa;
-  --text: #213547;
-  --muted: rgba(33,53,71,0.6);
-  --accent: #646cff;
-  --card-bg: rgba(33,53,71,0.03);
-}
-
-/* Dark theme overrides when `dark` class is present on <html> */
-html.dark {
-  --bg: #0f0f10;
-  --surface: #111214;
-  --text: rgba(255,255,255,0.92);
-  --muted: rgba(255,255,255,0.6);
-  --accent: #646cff;
-  --card-bg: rgba(255,255,255,0.02);
-}
-
-/* Smooth transitions for theme changes */
-* {
-  transition: background-color 260ms ease, color 260ms ease, border-color 260ms ease;
-}
-
-body, #app {
+body,
+#app {
   transition: background-color 300ms ease, color 300ms ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { transition: none !important; }
+  * {
+    transition: none !important;
+  }
 }
 
 /* Full-screen overlay used to create a cross-fade when toggling themes.
@@ -126,15 +122,79 @@ html.theme-transition::before {
 }
 
 /* Portfolio additions */
-.container { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
-.site-header, .site-footer { color: inherit; }
-.hero { padding-top: 2rem; padding-bottom: 2rem; }
-.lead { color: var(--muted); }
-.card { background: var(--card-bg); border-radius: 10px; }
-.grid { gap: 1rem; }
-
-@media (max-width: 640px) {
-  h1 { font-size: 1.6rem; }
-  h2 { font-size: 1.8rem; }
+.container {
+  max-width: 1100px;
+  padding: 0 1rem;
 }
 
+.site-header,
+.site-footer {
+  color: inherit;
+}
+
+.hero {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.lead {
+  color: var(--muted);
+}
+
+.grid {
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+}
+
+
+/* Start - Header */
+.site-header {}
+
+/* End Header */
+
+/* Start - About Content */
+.about-content h2,
+.about-content h3 {
+  font-size: clamp(1.1rem, 6vw, 3rem);
+  margin-bottom: -2rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* End - About Content */
+
+/* GENERAL H3 and H2  */
+.hobbies-inner h3,
+.hobbies-inner h2,
+.technical-inner h3,
+.technical-inner h2,
+.projects-inner h3,
+.projects-inner h2 {
+  font-size: clamp(.1rem, 6vw, 2rem);
+  margin: 0;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  line-height: 1.1;
+}
+
+.hobbies-inner, .technical-inner, .projects-inner {
+  max-width: 1067px;
+  text-align: left;
+}
+
+p {
+  font-size: 1.2rem;
+  font-weight: 1000;
+  color: #ffffff;
+  max-width: 1000px;
+}
