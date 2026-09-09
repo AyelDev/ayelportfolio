@@ -75,8 +75,8 @@ const experiences = ref<Experience[]>([
     company: 'Proweaver Inc.',
     duration: 'Jun 2025 – Present',
     highlights: [
-      { text: 'KD Sports USA: Built an e-commerce platform with WooCommerce, WordPress, and MySQL, enabling product management and online shopping.', link: 'https://www.kdsportsusa.com/' },
-      { text: 'Purity Tutoring Services Portal: Designed an online tutoring system for NCLEX nursing exam prep using Laravel, Vue.js, and MySQL, including authentication, student accounts, and course registration.', link: 'https://www.puritytutoringservicesnclex.com/' },
+      { text: 'KD Sports USA: Built an e-commerce platform with WooCommerce, WordPress, and MySQL, enabling product management and online shopping.', link: '' },
+      { text: 'Purity Tutoring Services Portal: Designed an online tutoring system for NCLEX nursing exam prep using Laravel, Vue.js, and MySQL, including authentication, student accounts, and course registration.', link: 'https://www.puritytutoringservicesnclex.com/portal/login' },
       { text: 'PetsNeedMeds: Migrated data from PrestaShop to WooCommerce, ensuring seamless transfer of product catalogs, customer records, and order history. Implemented PHP, WordPress, and MySQL integrations to stabilize the new e-commerce system.', link: 'https://www.petsneedmeds.com/' },
       { text: 'AyCare Service Portal: Built a Laravel + Vue.js portal for developmental disability care services, including authentication, user dashboards, and service management.' },
       { text: 'SamahCare Portal: Developed a healthcare portal using CodeIgniter 4, implementing patient management and service workflows.', link: 'https://www.samahcare.com/portal/' },
