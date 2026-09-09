@@ -150,7 +150,7 @@ onUnmounted(() => {
 <style scoped>
 .flyingtower-container {
   width: 100%;
-  height: 100vh; /* Adjust height as needed */
+  height: 100vh;
   overflow: hidden;
   background: transparent;
 }
@@ -158,5 +158,11 @@ onUnmounted(() => {
 .flyingtower-model {
   width: 100%;
   height: 100%;
+}
+
+@media (max-width: 768px) {
+  .flyingtower-container {
+    height: 50vh;
+  }
 }
 </style>

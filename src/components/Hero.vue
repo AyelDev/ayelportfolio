@@ -107,6 +107,12 @@ onBeforeUnmount(() => {
 }
 
 /* --- RESPONSIVENESS --- */
+@media (max-width: 1024px) {
+  .about-grid {
+    margin-top: 6rem;
+  }
+}
+
 @media (max-width: 768px) {
   .about-grid {
     grid-template-columns: 1fr;

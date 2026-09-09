@@ -60,6 +60,12 @@ section {
   padding: 2rem 0;
 }
 
+@media (max-width: 768px) {
+  section {
+    min-height: auto;
+  }
+}
+
 @media (max-width: 1024px) {
   #portfolio {
     flex-direction: column;
