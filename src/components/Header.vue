@@ -20,10 +20,10 @@ const scrollToSection = (event: Event, targetId: string) => {
       <div style="display:flex;align-items:center;gap:0.75rem">
         <nav class="nav">
           <a @click="(e) => scrollToSection(e, 'app')" href="#about">About Me</a>
-           <a @click="(e) => scrollToSection(e, 'hobbies')" href="#hobbies">Hobbies</a>
+           <a @click="(e) => scrollToSection(e, 'resume')" href="#resume">Download CV</a>
           <a @click="(e) => scrollToSection(e, 'skills')" href="#skills">Skills</a>
           <a @click="(e) => scrollToSection(e, 'projects')" href="#projects">Projects</a>
-          <a @click="(e) => scrollToSection(e, 'footer')" href="#footer">Contact</a>
+          <a @click="(e) => scrollToSection(e, 'contact')" href="#contact">Contact</a>
         </nav>
       </div>
     </div>

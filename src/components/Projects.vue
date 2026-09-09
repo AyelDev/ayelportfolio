@@ -3,74 +3,99 @@
     <div class="projects-inner">
 
       <div class="projects-card">
-        <h3>My Projects</h3>
-        <p>
-          When I'm not at my desk, you'll usually find me <strong>drawing</strong>.
-          I love exploring digital illustration and traditional sketching to
-          balance out my technical work.
-        </p>
+        <h3>Experience & Projects</h3>
 
-        <Carousel v-bind="settings" :breakpoints="breakpoints">
-          <Slide v-for="project in projects" :key="project.id">
-            <div class="project-card">
-              <div class="image-container">
-                <img :src="project.image" :alt="project.title" class="project-img" />
-                <div class="status-tag">{{ project.status }}</div>
-              </div>
+        <div v-for="(exp, index) in experiences" :key="index" class="experience-item">
+          <div class="experience-header">
+            <h4 class="experience-role">{{ exp.role }}</h4>
+            <a v-if="exp.link" :href="exp.link" target="_blank" class="experience-company">{{ exp.company }}</a>
+            <span v-else class="experience-company">{{ exp.company }}</span>
+          </div>
+          <span class="experience-duration">{{ exp.duration }}</span>
+          <ul class="experience-highlights">
+            <li v-for="(item, i) in exp.highlights" :key="i">
+              {{ item.text }}
+              <button v-if="item.link" @click="togglePreview(item.link)" class="preview-btn">
+                {{ activePreview === item.link ? 'Close' : 'Preview' }}
+              </button>
+            </li>
+          </ul>
 
-              <div class="project-info">
-                <h4 class="project-title">{{ project.title }}</h4>
-                <div class="project-footer">
-                  <span class="price">${{ project.price }}</span>
-                  <div class="actions">
-                    <button class="icon-btn">❤️</button>
-                    <button class="icon-btn cart-btn">🛒</button>
-                  </div>
-                </div>
-              </div>
+          <div v-if="activePreview && exp.highlights.some(h => h.link === activePreview)" class="preview-container">
+            <div class="preview-header">
+              <span class="preview-url">{{ activePreview }}</span>
+              <button @click="activePreview = null" class="preview-close">Close</button>
             </div>
-          </Slide>
-
-          <template #addons>
-            <Navigation />
-            <Pagination />
-          </template>
-        </Carousel>
+            <iframe
+              v-if="!previewFailed"
+              :src="activePreview"
+              @error="previewFailed = true"
+              sandbox="allow-scripts allow-same-origin"
+              class="preview-iframe"
+            />
+            <div v-else class="preview-fallback">
+              <p>This site can't be embedded.</p>
+              <a :href="activePreview" target="_blank" class="preview-open">Open in new tab</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import { ref } from 'vue'
 
-// Mock Data with Random Images
-const projects = ref([
-  { id: 1, title: 'Digital Portrait', price: 45, status: 'Completed', image: 'https://picsum.photos/400/300?random=1' },
-  { id: 2, title: 'Cyberpunk City', price: 60, status: 'In Progress', image: 'https://picsum.photos/400/300?random=2' },
-  { id: 3, title: 'Nature Sketches', price: 30, status: 'New', image: 'https://picsum.photos/400/300?random=3' },
-  { id: 4, title: 'UI Kit Design', price: 85, status: 'Featured', image: 'https://picsum.photos/400/300?random=4' },
-  { id: 5, title: 'Logo Concepts', price: 50, status: 'Completed', image: 'https://picsum.photos/400/300?random=5' },
-])
-
-// Carousel Settings
-const settings = {
-  itemsToShow: 1,
-  snapAlign: 'center' as const,
+interface Highlight {
+  text: string
+  link?: string
 }
 
-// Responsive Breakpoints
-const breakpoints = {
-  700: {
-    itemsToShow: 2,
-    snapAlign: 'center' as const,
+interface Experience {
+  role: string
+  company: string
+  duration: string
+  highlights: Highlight[]
+  link?: string
+}
+
+const experiences = ref<Experience[]>([
+  {
+    role: 'Software Engineer',
+    company: 'Auksilyo Professionals',
+    duration: 'Jan 2025 – Jun 2026',
+    highlights: [
+      { text: 'Developed a .NET application for Sargent and Greenleaf using .NET, Angular, and SQL Express.' },
+      { text: 'Collaborated with cross-functional teams to deliver secure and scalable solutions.' },
+    ],
   },
-  1024: {
-    itemsToShow: 3,
-    snapAlign: 'start' as const,
+  {
+    role: 'PHP Programmer',
+    company: 'Proweaver Inc.',
+    duration: 'Jun 2025 – Present',
+    highlights: [
+      { text: 'KD Sports USA: Built an e-commerce platform with WooCommerce, WordPress, and MySQL, enabling product management and online shopping.', link: 'https://www.kdsportsusa.com/' },
+      { text: 'Purity Tutoring Services Portal: Designed an online tutoring system for NCLEX nursing exam prep using Laravel, Vue.js, and MySQL, including authentication, student accounts, and course registration.', link: 'https://www.puritytutoringservicesnclex.com/' },
+      { text: 'PetsNeedMeds: Migrated data from PrestaShop to WooCommerce, ensuring seamless transfer of product catalogs, customer records, and order history. Implemented PHP, WordPress, and MySQL integrations to stabilize the new e-commerce system.', link: 'https://www.petsneedmeds.com/' },
+      { text: 'AyCare Service Portal: Built a Laravel + Vue.js portal for developmental disability care services, including authentication, user dashboards, and service management.' },
+      { text: 'SamahCare Portal: Developed a healthcare portal using CodeIgniter 4, implementing patient management and service workflows.', link: 'https://www.samahcare.com/portal/' },
+      { text: 'MassBay AFC Caregiver Portal (MLU Portal): Designed and implemented a caregiver management portal using Laravel, Vue.js, and MySQL, supporting secure login, caregiver workflows, and data management.' },
+      { text: 'My Little University Portal: Developed an education portal using Laravel, Vue.js, and MySQL.', link: 'https://www.mylittleu.com/portal/login' },
+    ],
   },
+])
+
+const activePreview = ref<string | null>(null)
+const previewFailed = ref(false)
+
+function togglePreview(url: string) {
+  if (activePreview.value === url) {
+    activePreview.value = null
+  } else {
+    activePreview.value = url
+    previewFailed.value = false
+  }
 }
 </script>
 
@@ -79,69 +104,154 @@ const breakpoints = {
   padding: 2rem 0;
 }
 
-/* Card Styling */
-.project-card {
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  margin: 10px;
-  overflow: hidden;
-  text-align: left;
-  transition: transform 0.2s;
+/* Experience Styling */
+.experience-item {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.image-container {
-  position: relative;
-}
-
-.project-img {
-  width: 100%;
-  display: block;
-}
-
-.status-tag {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: bold;
-}
-
-.project-info {
-  padding: 1rem;
-}
-
-.project-title {
+.experience-item:last-of-type {
+  border-bottom: none;
   margin-bottom: 0.5rem;
+  padding-bottom: 0;
+}
+
+.experience-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.experience-role {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.experience-company {
+  font-size: 1.1rem;
+  color: var(--accent);
+  text-decoration: none;
   font-weight: 600;
 }
 
-.project-footer {
+.experience-company:hover {
+  text-decoration: underline;
+}
+
+.experience-duration {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.experience-highlights {
+  margin: 0;
+  padding-left: 1.25rem;
+  list-style-type: disc;
+}
+
+.experience-highlights li {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 0.35rem;
+}
+
+/* Preview Button */
+.preview-btn {
+  display: inline;
+  margin-left: 0.5rem;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  font-family: inherit;
+}
+
+.preview-btn:hover {
+  color: #ffffff;
+}
+
+/* Preview Container */
+.preview-container {
+  margin-top: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.preview-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0.5rem 0.75rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.price {
-  font-size: 1.25rem;
-  font-weight: bold;
+.preview-url {
+  font-size: 0.8rem;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.icon-btn {
-  background: none;
-  border: 1px solid #cbd5e1;
+.preview-close {
+  padding: 0.2rem 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  padding: 4px 8px;
+  color: #ffffff;
+  font-size: 0.75rem;
   cursor: pointer;
-  margin-left: 5px;
+  font-family: inherit;
 }
 
-.cart-btn {
-  background: #3b82f6;
-  color: white;
+.preview-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.preview-iframe {
+  width: 100%;
+  height: 500px;
   border: none;
+  background: #ffffff;
+}
+
+.preview-fallback {
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.preview-fallback p {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 1rem;
+}
+
+.preview-open {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #0f0f10;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.preview-open:hover {
+  transform: translateY(-1px);
 }
 </style>

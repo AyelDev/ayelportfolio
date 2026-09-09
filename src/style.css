@@ -12,7 +12,7 @@ html {
   --text: rgba(255, 255, 255, 0.92);
   --muted: rgba(255, 255, 255, 0.6);
   --accent: #7edbff;
-  --card-bg: rgba(0, 0, 0, 0.15);
+  --card-bg: rgba(0, 0, 0, 0.51);
   /* primary font */
   font-family: 'Rowdies', sans-serif;
   --secondary-font: "Montserrat", sans-serif;
@@ -74,7 +74,7 @@ button:focus-visible {
 }
 
 /* component card */
-.hobbies-card, .technical-card, .projects-card{
+.hobbies-card, .technical-card, .projects-card, .contact-card, .hero-card{
   background: var(--card-bg); /* Semi-transparent white */
   backdrop-filter: blur(8px); /* The "Frosted" effect */
   -webkit-backdrop-filter: blur(12px);

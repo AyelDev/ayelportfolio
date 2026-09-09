@@ -1,25 +1,17 @@
 <template>
-  <section class="hobbies container">
-    <div class="hobbies-inner">
-      <div class="hobbies-card">
+  <section class="resume container">
+    <div class="resume-inner">
+      <div class="hero-card">
 
-        <h3>Hobbies</h3>
+        <h3>Download CV</h3>
         <p>
-          When I'm not at my desk, you'll usually find me <strong>drawing</strong>.
+          Want a summary of my experience and skills? Download my resume.
         </p>
 
-        <div class="gallery-wrapper">
-          <masonry-wall :items="myPhotos" :column-width="300" :gap="16">
-            <template #default="{ item }">
-              <div class="card">
-                <img :src="item.src" :alt="item.alt" class="gallery-img" />
-                <div v-if="item.title" class="card-content">
-                  {{ item.title }}
-                </div>
-              </div>
-            </template>
-          </masonry-wall>
-        </div>
+        <a :href="`${publicPath}resume/Ariel_Abelgas_Resume_Web_Programmer_2026.pdf`" download class="download-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path :d="mdiDownload"/></svg>
+          Download PDF
+        </a>
 
       </div>
     </div>
@@ -27,37 +19,52 @@
 </template>
 
 <script setup lang="ts">
-import MasonryWall from '@yeger/vue-masonry-wall'
+import { mdiDownload } from '@mdi/js'
 
-const myPhotos = [
-  { src: 'https://picsum.photos/400/600', alt: 'Sketch 1', title: 'Digital Portrait' },
-  { src: 'https://picsum.photos/400/300', alt: 'Sketch 2', title: 'Landscape' },
-  { src: 'https://picsum.photos/400/500', alt: 'Sketch 3', title: 'Character Study' },
-  { src: 'https://picsum.photos/400/400', alt: 'Sketch 4', title: 'Still Life' },
-];
+const publicPath = import.meta.env.BASE_URL
 </script>
 
 <style scoped>
-.hobbies {
+.resume {
   padding: 2rem 0;
 }
 
-.gallery-wrapper {
-  margin-top: 2rem;
+.resume-inner {
+  max-width: 1067px;
+  text-align: left;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+.hero-card h3 {
+  font-size: clamp(0.1rem, 6vw, 2rem);
+  margin: 0;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  line-height: 1.1;
 }
 
-.gallery-img {
-  width: 100%;
-  display: block;
+.hero-card > p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 2rem;
 }
 
-.card-content {
-  padding: 10px 0 0;
-  font-size: 0.9rem;
-  color: #555;
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--accent);
+  color: #0f0f10;
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(126, 219, 255, 0.3);
 }
 </style>

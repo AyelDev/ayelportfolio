@@ -1,6 +1,7 @@
 <template>
   <div id="portfolio">
     <Background3D />
+    <AudioPlayer />
 
     <div class="main-content">
       <Header />
@@ -8,7 +9,7 @@
         <section id="about">
           <Hero />
         </section>
-        <section id="hobbies">
+        <section id="resume">
           <Hobbies />
         </section>
         <section id="skills">
@@ -16,6 +17,9 @@
         </section>
         <section id="projects">
           <Projects />
+        </section>
+        <section id="contact">
+          <Contact />
         </section>
       </main>
       <Footer id="footer" />
@@ -31,6 +35,8 @@ import Footer from './components/Footer.vue'
 import Skills from './components/TechnicalSkills.vue'
 import Hobbies from './components/Hobbies.vue'
 import Background3D from './components/Background3D.vue'
+import Contact from './components/Contact.vue'
+import AudioPlayer from './components/AudioPlayer.vue'
 </script>
 
 <style scoped>
