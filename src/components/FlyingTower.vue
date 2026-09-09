@@ -72,7 +72,7 @@ const initScene = () => {
   const loader = new GLTFLoader()
 
   loader.load(
-    '/3dmodel/flying_tower/scene.gltf',
+    `${import.meta.env.BASE_URL}3dmodel/flying_tower/scene.gltf`,
     (gltf) => {
       model = gltf.scene
       if (!model) return

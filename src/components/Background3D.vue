@@ -55,7 +55,7 @@ const initScene = () => {
   // 5. Loader
   const loader = new GLTFLoader()
   loader.load(
-    '/3dmodel/airship/scene.gltf',
+    `${import.meta.env.BASE_URL}3dmodel/airship/scene.gltf`,
     (gltf) => {
       model = gltf.scene
       if (!model) return
