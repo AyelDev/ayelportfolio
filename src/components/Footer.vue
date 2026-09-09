@@ -12,5 +12,5 @@
 
 <style scoped>
 .site-footer { padding: 2rem 0 1rem; text-align:center; border-top:1px solid rgba(255,255,255,0.03); }
-.site-footer small { color: rgb(0 0 0 / 60%); }
+.site-footer small { color: var(--muted); }
 </style>

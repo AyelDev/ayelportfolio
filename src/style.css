@@ -1,7 +1,7 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
-  /* Account for fixed header */
+  overflow-x: hidden;
 }
 
 :root {
@@ -145,13 +145,17 @@ html.theme-transition::before {
   gap: 1rem;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   h1 {
     font-size: 1.6rem;
   }
 
   h2 {
     font-size: 1.8rem;
+  }
+
+  #app {
+    padding: 1rem;
   }
 }
 
@@ -197,4 +201,10 @@ p {
   font-weight: 1000;
   color: #ffffff;
   max-width: 1000px;
+}
+
+@media (max-width: 768px) {
+  .hobbies-inner, .technical-inner, .projects-inner {
+    padding: 0;
+  }
 }

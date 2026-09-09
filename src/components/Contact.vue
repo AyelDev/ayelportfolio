@@ -124,5 +124,14 @@ a.contact-value:hover {
   .contact-card {
     padding: 1.5rem;
   }
+
+  .contact-item {
+    gap: 0.75rem;
+  }
+
+  .contact-value {
+    font-size: 0.95rem;
+    word-break: break-word;
+  }
 }
 </style>

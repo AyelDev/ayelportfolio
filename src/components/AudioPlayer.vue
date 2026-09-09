@@ -170,4 +170,20 @@ function toggle() {
   color: #ffffff;
   transform: translateY(-2px);
 }
+
+@media (max-width: 768px) {
+  .welcome-content {
+    padding: 2rem 2.5rem;
+    margin: 1rem;
+  }
+
+  .welcome-text {
+    font-size: 1.1rem;
+  }
+
+  .audio-btn {
+    width: 36px;
+    height: 36px;
+  }
+}
 </style>

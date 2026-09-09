@@ -254,4 +254,28 @@ function togglePreview(url: string) {
 .preview-open:hover {
   transform: translateY(-1px);
 }
+
+@media (max-width: 768px) {
+  .preview-iframe {
+    height: 60vw;
+    min-height: 250px;
+  }
+
+  .preview-header {
+    padding: 0.4rem 0.5rem;
+  }
+
+  .preview-url {
+    font-size: 0.7rem;
+  }
+
+  .experience-header {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .experience-highlights li {
+    font-size: 0.9rem;
+  }
+}
 </style>

@@ -63,7 +63,29 @@ import {
 
 .contact-wrapper a:hover {
   background: #2563eb;
-  color: #ffffff; /* Explicit hex for consistency */
+  color: #ffffff;
   transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .contact-wrapper {
+    top: auto;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.4rem 0.6rem;
+    gap: 0.5rem;
+    border-radius: 12px;
+  }
+
+  .contact-wrapper a {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .contact-wrapper a svg {
+    width: 18px;
+    height: 18px;
+  }
 }
 </style>

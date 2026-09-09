@@ -111,9 +111,23 @@ onBeforeUnmount(() => {
   .about-grid {
     grid-template-columns: 1fr;
     text-align: center;
+    margin-top: 4rem;
   }
   .hero-card {
     padding: 2rem;
+  }
+  .about-title {
+    font-size: 2.2rem;
+  }
+  .hero-sub-title {
+    font-size: 1.1rem;
+  }
+  .about-description {
+    font-size: 1rem;
+  }
+  .component-wrapper {
+    min-height: auto;
+    padding: 2rem 0;
   }
 }
 </style>
