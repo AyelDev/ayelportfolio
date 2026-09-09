@@ -30,7 +30,7 @@ const revealSection = ref<HTMLElement | null>(null);
 
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) isVisible.value = true;
+    if (entries[0]?.isIntersecting) isVisible.value = true;
   }, { threshold: 0.1 });
 
   if (revealSection.value) observer.observe(revealSection.value);

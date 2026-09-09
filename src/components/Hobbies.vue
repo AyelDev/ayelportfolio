@@ -26,7 +26,7 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MasonryWall from '@yeger/vue-masonry-wall'
 
 const myPhotos = [

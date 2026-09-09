@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SvgIcon from '@jamescoyle/vue-icon'
 import {
   mdiGithub,
   mdiLinkedin,
@@ -11,19 +10,19 @@ import {
 <template>
   <div class="contact-wrapper">
     <a href="mailto:devyelabelgas@gmail.com" target="_blank" aria-label="Gmail">
-      <svg-icon type="mdi" :path="mdiGmail" :size="20" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path :d="mdiGmail"/></svg>
     </a>
 
     <a href="https://github.com/ayeldev" target="_blank" aria-label="GitHub">
-      <svg-icon type="mdi" :path="mdiGithub" :size="20" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path :d="mdiGithub"/></svg>
     </a>
 
     <a href="https://www.linkedin.com/in/ariel-abelgas-a87990361/" target="_blank" aria-label="LinkedIn">
-      <svg-icon type="mdi" :path="mdiLinkedin" :size="20" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path :d="mdiLinkedin"/></svg>
     </a>
 
     <a href="https://instagram.com/ayelblgs" target="_blank" aria-label="Instagram">
-      <svg-icon type="mdi" :path="mdiInstagram" :size="20" />
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path :d="mdiInstagram"/></svg>
     </a>
   </div>
 </template>

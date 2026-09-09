@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 const mountPoint = ref<HTMLDivElement | null>(null)
 let scene: THREE.Scene | null = null
@@ -58,26 +58,28 @@ const initScene = () => {
     '/3dmodel/airship/scene.gltf',
     (gltf) => {
       model = gltf.scene
+      if (!model) return
       model.scale.set(1.5, 1.5, 1.5)
       model.position.set(0, -2, 0)
       
-      model.traverse((child: any) => {
-        if (child.isMesh) {
-          if (child.material.map) child.material.map.colorSpace = THREE.SRGBColorSpace
-          child.material.metalness = 0.3
-          child.material.roughness = 0.4
+      model.traverse((child: THREE.Object3D) => {
+        if (child instanceof THREE.Mesh) {
+          const mat = child.material as THREE.MeshStandardMaterial
+          if (mat.map) mat.map.colorSpace = THREE.SRGBColorSpace
+          mat.metalness = 0.3
+          mat.roughness = 0.4
         }
       })
       
-      scene?.add(model)
+      if (model) scene?.add(model)
       
       if (gltf.animations && gltf.animations.length > 0) {
-        animationMixer = new THREE.AnimationMixer(model)
-        animationMixer.clipAction(gltf.animations[0]).play()
+        animationMixer = new THREE.AnimationMixer(model!)
+        animationMixer.clipAction(gltf.animations[0]!).play()
       }
     },
     undefined,
-    (err) => console.error('Model failed to load:', err)
+    (err: unknown) => console.error('Model failed to load:', err)
   )
 
   window.addEventListener('resize', handleResize)

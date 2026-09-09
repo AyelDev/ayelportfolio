@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import * as THREE from 'three'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 
 const mountPoint = ref<HTMLDivElement | null>(null)
 let scene: THREE.Scene | null = null
@@ -75,39 +75,39 @@ const initScene = () => {
     '/3dmodel/flying_tower/scene.gltf',
     (gltf) => {
       model = gltf.scene
+      if (!model) return
       model.scale.set(2, 2, 2)
       model.position.set(0, -1.5, 0)
       
       // Fix Material Colors and Reflections
-      model.traverse((child: any) => {
-        if (child.isMesh) {
+      model.traverse((child: THREE.Object3D) => {
+        if (child instanceof THREE.Mesh) {
+          const mat = child.material as THREE.MeshStandardMaterial
           // Force sRGB on textures if they look washed out
-          if (child.material.map) {
-            child.material.map.colorSpace = THREE.SRGBColorSpace
+          if (mat.map) {
+            mat.map.colorSpace = THREE.SRGBColorSpace
           }
           
           // Adjust physical properties to match the photo
-          if (child.material) {
-            child.material.needsUpdate = true
-            // If the suit is black/dark, it's usually too much metalness without a skybox
-            if (child.material.metalness > 0) {
-                child.material.metalness = 0.4 
-                child.material.roughness = 0.2 // Lower roughness = shinier helmet
-            }
+          mat.needsUpdate = true
+          // If the suit is black/dark, it's usually too much metalness without a skybox
+          if (mat.metalness > 0) {
+              mat.metalness = 0.4 
+              mat.roughness = 0.2 // Lower roughness = shinier helmet
           }
         }
       })
       
-      scene?.add(model)
+      scene?.add(model!)
       
       if (gltf.animations && gltf.animations.length > 0) {
-        animationMixer = new THREE.AnimationMixer(model)
-        const action = animationMixer.clipAction(gltf.animations[0])
+        animationMixer = new THREE.AnimationMixer(model!)
+        const action = animationMixer.clipAction(gltf.animations[0]!)!
         action.play()
       }
     },
     undefined,
-    (error) => console.error('Error loading model:', error)
+    (error: unknown) => console.error('Error loading model:', error)
   )
 
   window.addEventListener('resize', handleResize)

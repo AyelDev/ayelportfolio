@@ -41,7 +41,7 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import 'vue3-carousel/dist/carousel.css'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
 import { ref } from 'vue'
@@ -58,18 +58,18 @@ const projects = ref([
 // Carousel Settings
 const settings = {
   itemsToShow: 1,
-  snapAlign: 'center',
+  snapAlign: 'center' as const,
 }
 
 // Responsive Breakpoints
 const breakpoints = {
   700: {
     itemsToShow: 2,
-    snapAlign: 'center',
+    snapAlign: 'center' as const,
   },
   1024: {
     itemsToShow: 3,
-    snapAlign: 'start',
+    snapAlign: 'start' as const,
   },
 }
 </script>
